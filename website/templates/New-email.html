@@ -1,0 +1,48 @@
+{% extends "base.html" %} {% block title %}Newemail{% endblock %} {% block
+content %}
+<br>
+<br>
+<form method="POST">
+    <div class="shadow lg-3 mb-5 bg-body rounded">
+    <div class="card-header">
+    <label for="emailchange"> NEW Email Address</label>
+    </div>
+    <div class="card-body">
+        <a>New email:
+    <input
+      type="text"
+      id="emailchange"
+      name="emailchange"
+      class="form-control"
+      placeholder="Enter Email"
+      >
+        </a>
+         <label for="password3">Password</label>
+    <input
+      type="password"
+      id="password3"
+      name="password3"
+      class="form-control"
+      placeholder="Enter Password"
+    />
+    <label for="password4">Password Again</label>
+    <input
+      type="password"
+      id="password4"
+      name="password4"
+      class="form-control"
+      placeholder="Enter Password Again"
+    />
+   <br />
+    <div align="center">
+      <button class="btn btn-primary" type="submit">Confirm</button>
+    </div>
+    </div>
+    </div>
+
+</form>
+
+
+
+
+{% endblock %}

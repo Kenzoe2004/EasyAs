@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block title %}Newemail{% endblock %} {% block
+content %}
+<div class="shadow lg-3 mb-5 bg-body rounded">
+<form enctype="multipart/form-data" method="POST" >
+    <div class="card-header">
+    <label for="profilepic">Profile picture update</label>
+    </div>
+     <div class="card-body">
+<div>
+     <input  type="file" name="profilepic" id="profilepic" >
+   </div>
+     </div>
+   <br />
+    <div align="center">
+      <button class="btn btn-primary" type="submit">Update</button>
+    </div>
+  </form>
+    <br>
+    <div align="center">
+  <a href="/userinfo"
+    ><button type="button" class="btn btn-secondary">Back</button></a>
+        </div>
+    <br>
+        <div class="card-footer"> Be carefull that only these files ['png', 'jpg', 'jpeg', 'gif'] will work and if the file is the wrong size the image may be distorted.</div>
+</div>
+{% endblock %}

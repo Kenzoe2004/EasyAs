@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<br>
+<br>
+<br>
+<form method="POST">
+<div class="shadow lg-3 mb-5 bg-body rounded">
+  <div class="card-header">
+<h1>UserInfo</h1>
+  </div>
+  <br>
+  <div class="contanier">
+      <div class="row">
+          <div class="col-8" >
+  <div class="card-body">
+<div class="card" style="width: 18rem;">
+    <div class = "card-header d-flex justify-content-between align-items-center">
+            <a>{{user.username}}</a>
+    </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">User-id : {{user.id}}</li>
+    <li class="list-group-item">Email : {{user.email}}</li>
+    <li class="list-group-item">idimpo : {{user.userimposterid}}</li>
+  </ul>
+  <div class="card-footer">
+     Member Since {{user.date_created}}
+  </div>
+</div>
+    <br>
+  </div>
+          </div>
+        <div class="col-4" align="right" >
+           <div style="width:16rem" >
+     <a href="change profilepic"><img src="{{ profilepic }}" class="rounded-circle w-100" alt="..." ></a>
+  </div>
+        </div>
+      </div>
+  </div>
+<div class = "card-footer">
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Change Username</h5>
+        <p class="card-text">Dont like your Username np.</p>
+          <input name="userchange" id="userchange" placeholder="New Username" class="form-control">
+          <br>
+        <a href="/userinfo"
+    ><button class="btn btn-primary" type="submit">Change</button></a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Email change</h5>
+        <p class="card-text">to change your email pls vist...</p>
+        <a href="change email" class="btn btn-primary">Go</a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</form>
+
+{% endblock %}

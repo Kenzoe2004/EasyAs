@@ -1,0 +1,64 @@
+{% extends "base.html" %} {% block title %}Advance Search{% endblock %} {% block content
+%}
+<br>
+  <h1 class="display-1" align="center"> Welcome to EasyA's </h1>
+
+
+
+<br>
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{{url_for('static',filename='images/Untitled presentation2.png')}}" class="d-block w-100" alt="download.python">
+    </div>
+    <div class="carousel-item">
+      <img src="{{url_for('static',filename='images/Untitled presentation2.png')}}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{{url_for('static',filename='images/Untitled presentation2.png')}}" class="d-block w-100" alt="..." width="0" height="750">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Create Posts</h5>
+        <p class="card-text">Help expand our libary of practice tests by posting...</p>
+        <a href="/create-post" class="btn btn-primary">Start Posting Now</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title"> Sign Up and A's your next test</h5>
+        <p class="card-text">Veiw 100s of practice tests to help you A's you next test...</p>
+        <a href="/sign-up" class="btn btn-primary">Sign Up now for Free</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">About Us</h5>
+        <p class="card-text">To learn more about vist our about us page...</p>
+        <a href="#" class="btn btn-primary">Learn more about EasyA's</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

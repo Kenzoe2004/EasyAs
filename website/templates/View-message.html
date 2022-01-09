@@ -1,0 +1,40 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<h1 align="center">Messages</h1>
+<div id = "messages">
+   {%for message in messages%}
+   <div class = "card border-dark">
+       <div
+       class = "card-header d-flex justify-content-between align-items-center"
+       >
+           <div class="col-4" >
+           <div style="width:5rem" >
+
+            <img class="rounded-circle w-100" src="{{ url_for('static', filename='profile_pics/' + message.user.profileimg) }}">
+           </div>
+             </div>
+          <a>From:<a href = "#">{{message.user.username}}</a></a>
+           <a>To: <a href = "#">{{message.username2}}</a></a>
+        <div class="btn-group" role="group">
+             <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+             Dropdown
+            </button>
+             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                 <li><a class="dropdown-item" href="/chat/{{message.id}}">Chat</a></li>
+                 <li><a class="dropdown-item" href="/delete_message/{{message.id}}">Delete Chatroom</a> </li>
+             </ul>
+           </div>
+       </div>
+       <div class="card-body">
+           <div class="card-text">{{message.text}}
+           </div>
+           <div class = "card-footer text-muted">
+               {{message.date_created}}
+           </div>
+       </div>
+   </div>
+   <br/>
+   {% endfor %}
+</div>
+
+{% endblock %}

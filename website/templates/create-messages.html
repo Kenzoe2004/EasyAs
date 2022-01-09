@@ -1,0 +1,28 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<h1 align="center">Send a Chatroom invite</h1>
+
+<form   method="POST">
+  <br/>
+  <label for="username2">Username</label>
+    <input
+      type="text"
+      id="username2"
+      name="username2"
+      class="form-control"
+      placeholder="Enter Username to Send"
+    />
+  <br>
+  <textarea name="text" id="text" class="form-control" placeholder="Enter Text here"></textarea>
+  <br />
+  <div align="center">
+    <button type="submit" class="btn btn-lg btn-primary">Send</button>
+  </div>
+</form>
+<br />
+<div align="center">
+  <a href="/home"
+    ><button type="button" class="btn btn-lg btn-secondary">Back</button></a
+  >
+</div>
+{% endblock %}
