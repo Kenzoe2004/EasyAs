@@ -465,3 +465,28 @@ def delete_questionchat(question_comment_id):
 
    return redirect(url_for('views.view_message'))
 
+@views.route("/delete-question/<id>")
+@login_required
+def delete_question(id):
+        question = Question.query.filter_by(id=id).first()
+        comment = Comment.query.filter_by(post_id=id).first()
+
+        if not question:
+            flash("Post does not exist.", category='error')
+        if current_user.id == 1:
+            for question_comments in question.comments:
+                db.session.delete(question_comments)
+                db.session.commit()
+            db.session.delete(question)
+            db.session.commit()
+            flash('Post deleted.', category='success')
+        elif current_user.id != question.author:
+            flash('You do not have permission to delete this post.', category='error')
+        else:
+            for question_comments in question.comments:
+                db.session.delete(question_comments)
+                db.session.commit()
+            db.session.delete(question)
+            db.session.commit()
+            flash('Post deleted.', category='success')
+        return redirect(url_for('views.home'))
