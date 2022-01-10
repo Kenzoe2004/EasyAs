@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for
 from flask import Blueprint, render_template, redirect, url_for, request, flash
+import flask
 from . import db
 from .models import User
 from flask_login import login_user, logout_user, login_required, current_user
@@ -100,9 +101,8 @@ def verify():
             text = message.as_string()
             session.sendmail(sender_address, email, text)
             otp_dict[email] = otp
-            print(otp_dict)
             session.quit()
-        
+        flash('Please refer to you email ID for verification code.', category='success')
         return render_template("verify.html",email = email, username = username, password1 = password1)
 @auth.route("/verify-1", methods=['POST'])
 def verify1():
