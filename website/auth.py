@@ -48,7 +48,7 @@ def logout():
     logout_user()
     return redirect(url_for("views.home"))
 
-@auth.route("/verify", methods=['GET', 'POST'])
+@auth.route("/verify", methods=['POST'])
 def verify():
     if request.method == 'POST':
         email = request.form.get("email")
