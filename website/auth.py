@@ -102,7 +102,7 @@ def verify():
             session.sendmail(sender_address, email, text)
             otp_dict[email] = otp
             session.quit()
-        flash('Please refer to you email ID for verification code.', category='success')
+        flash('Please refer to your email ID for verification code.', category='success')
         return render_template("verify.html",email = email, username = username, password1 = password1)
 @auth.route("/verify-1", methods=['POST'])
 def verify1():
