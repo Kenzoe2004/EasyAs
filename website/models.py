@@ -14,6 +14,8 @@ class User(db.Model, UserMixin):
     profileimg = db.Column(db.String(20), nullable=False, default='Userinfoimage.png')
     messages = db.relationship('Message', backref='user', passive_deletes=True)
     chat_comments = db.relationship('Chat_comment', backref='user', passive_deletes=True)
+    question_comments = db.relationship('Question_comment', backref='user', passive_deletes=True)
+    questions = db.relationship('Question', backref='user', passive_deletes=True)
 
     @staticmethod
     def is_authenticated(self):
@@ -69,3 +71,24 @@ class Chat_comment(db.Model):
     message_id = db.Column(db.Integer, db.ForeignKey(
         'message.id', ondelete="CASCADE"), nullable=False)
 
+class Question_comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(200), nullable=False)
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    author = db.Column(db.Integer, db.ForeignKey(
+        'user.id', ondelete="CASCADE"), nullable=False)
+    question_id = db.Column(db.Integer, db.ForeignKey(
+        'question.id', ondelete="CASCADE"), nullable=False)
+
+
+class Question(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.Text, nullable=False)
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    author = db.Column(db.Integer, db.ForeignKey(
+        'user.id', ondelete="CASCADE"), nullable=False)
+    imgid = db.Column(db.Integer, db.ForeignKey(
+        'img.id', ondelete="CASCADE"), nullable=False)
+    Course = db.Column(db.Text, nullable=False)
+    school = db.Column(db.Text, nullable=False)
+    comments = db.relationship('Question_comment', backref='question', passive_deletes=True)

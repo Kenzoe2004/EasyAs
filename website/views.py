@@ -2,7 +2,7 @@ import os
 from flask import Blueprint, render_template, request, flash, redirect, url_for,Response
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
-from .models import Post, Img , User,Message,Comment,Chat_comment
+from .models import Post, Img , User,Message,Comment,Chat_comment,Question_comment,Question
 from . import db
 from werkzeug.security import  check_password_hash
 from os import path
@@ -397,4 +397,71 @@ def view_users():
         #user = current_user
         #return render_template('Find new friends.html', user=user)
 
+@views.route("/Tests")
+@login_required
+def view_Questions():
+    questions = Question.query.all()
+    return render_template('Question.html',Questions=questions,user=current_user)
+
+@views.route("/create-question", methods=['GET', 'POST'])
+@login_required
+def create_Questions():
+    if User.query.filter_by(username=current_user.username).first().userimposterid == 1:
+        flash("You are banned.",category='error')
+        return redirect(url_for('auth.logout'))
+    if request.method == "POST":
+        text = request.form.get('text')
+        pic = request.files['pic']
+        school = request.form.get('school')
+        Course = request.form.get('Course')
+
+        if not text and not Course and not school:
+            flash('Post cannot be empty', category='error')
+        else:
+            filename = secure_filename(pic.filename)
+            mimetype = pic.mimetype
+            img = Img(img=pic.read(), name=filename, mimetype=mimetype)
+            db.session.add(img)
+            db.session.commit()
+            question = Question(text=text, author=current_user.id,imgid=img.id,school=school,Course=Course)
+            db.session.add(question)
+            db.session.commit()
+            flash('Post created!', category='success')
+            return redirect(url_for('views.home'))
+
+    return render_template('create-question.html', user=current_user)
+
+@views.route("/create-question/<question_id>", methods=['POST'])
+@login_required
+def create_questioncomment(question_id):
+    text = request.form.get('text')
+    if not text:
+        flash('Comment cannot be empty.', category='error')
+    else:
+        message = Message.query.filter_by(id=question_id)
+        if message:
+            comment = Question_comment(
+                text=text, author=current_user.id, question_id=question_id)
+            db.session.add(comment)
+            db.session.commit()
+        else:
+            flash('Post does not exist.', category='error')
+
+    return redirect(url_for('views.view_Questions',id=question_id))
+
+@views.route("/delete-questionchat/<question_comment_id>")
+@login_required
+def delete_questionchat(question_comment_id):
+   comment = Question_comment.query.filter_by(id=question_comment_id).first()
+
+   if not comment:
+       flash('Comment does not exist.', category='error')
+   elif current_user.id != comment.author and current_user.id != comment.post.author:
+       flash('You do not have permission to delete this comment.', category='error')
+   else:
+       db.session.delete(comment)
+       db.session.commit()
+       flash('deleted successfully',category='sucess')
+
+   return redirect(url_for('views.view_message'))
 
