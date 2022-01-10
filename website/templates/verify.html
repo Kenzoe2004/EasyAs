@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block title %}Sign Up{% endblock %} {% block content %}
+<form method="POST" action="/verify-1">
+    <h3 align="center">Sign Up</h3>
+    <div class="form-group">
+        <label for="otp">OTP</label>
+        <input type="text" id="otp" name="otp" class="form-control" placeholder="Enter OTP" />
+        <input type="text" id="email" name="email" class="form-control" placeholder="Enter EMail" value="{{email}}" hidden/>
+        <input type="text" id="username" name="username" class="form-control" placeholder="Enter EMail" value="{{username}}" hidden/>
+        <input type="text" id="password" name="password" class="form-control" placeholder="Enter EMail" value="{{password1}}" hidden/>
+        <br />
+        <div align="center">
+            <button class="btn btn-primary" type="submit">Verify</button>
+        </div>
+    </div>
+</form>
+{% endblock %}
