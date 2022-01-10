@@ -1,0 +1,112 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+%}
+<h1 align="center">Questions</h1>
+<br/>
+<div id = "posts">
+    {%for question in Questions%}
+     <div class="shadow lg-3 mb-5 bg-body rounded">
+    <div class = "card border-dark" >
+        <div
+        class = "card-header d-flex justify-content-between align-items-center"
+        >
+             <div class="col-4" >
+           <div style="width:5rem" >
+
+            <img class="rounded-circle w-100" src="{{ url_for('static', filename='profile_pics/' + question.user.profileimg) }}">
+           </div>
+             </div>
+
+            <a href = "/posts/{{question.user.id}}">{{question.user.username}}</a>
+            <a>School: {{question.school}}</a>
+            <a>Course Code: {{question.Course}}</a>
+            {% if user.id == question.author %}
+          <div class="btn-group" role="group">
+              <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown
+             </button>
+              <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                  <li><a class="dropdown-item" href="/delete-question/{{question.id}}">Delete</a></li>
+              </ul>
+            </div>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            <div class="card-text">{{question.text}}
+            </div>
+            <div class="card-text"><a href = "/IMG/{{question.imgid}}">click here</a>
+            </div>
+            <br>
+              <div class="collapse" id="comments-{{question.id}}">
+        <div class="card">
+          <div class="card-body" id="comments-expanded-{{question.id}}">
+            {% for question_comment in question.comments %}
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="card-body">
+                  <div class="card-text">
+                <a href="/posts/{{question_comment.user.username}}"
+                  >{{question_comment.user.username}}</a
+                >: {{question_comment.text}}
+                      </div>
+              </div>
+              <div>
+                <small class="text-muted"> {{question_comment.date_created}}</small>
+                {% if user.id == question_comment.author or user.id == question.author %}
+                <div class="btn-group">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-primary dropdown-toggle"
+                    data-bs-toggle="dropdown"
+                  ></button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a
+                        href="/delete-question/{{question.id}}"
+                        class="dropdown-item"
+                        >Delete</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <p class="card-text">
+        {% if question.comments|length > 0 %}
+        <a data-bs-toggle="collapse" href="#comments-{{question.id}}" role="button">
+          <small>View {{question.comments|length}} Comments</small>
+        </a>
+        {% else %}
+        <small class="text-muted">No Comments</small>
+        {% endif %}
+      </p>
+      <form
+        class="input-group mb-3"
+        method="POST"
+        action="/create-question/{{question.id}}"
+      >
+        <input
+                type="text"
+          id="text"
+          name="text"
+          class="form-control"
+          placeholder="Comment something!"
+          />
+
+        <button type="submit" class="btn btn-primary">Comment</button>
+      </form>
+            <div class = "card-footer text-muted">
+                {{question.date_created}}
+            </div>
+        </div>
+    </div>
+     </div>
+    <br/>
+    {% endfor %}
+</div>
+
+
+{% endblock %}
