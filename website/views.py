@@ -99,14 +99,7 @@ def delete_post(id):
 
 
 
-@views.route("/IMG/<imgid>")
-@login_required
-def get_img(imgid):
-    img = Img.query.filter_by(id=imgid).first()
-    if not img:
-        flash('no image.', category='error')
 
-    return Response(img.img, mimetype=img.mimetype)
 
 @views.route("/show")
 @login_required
