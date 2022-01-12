@@ -2,6 +2,15 @@
 %}
 <h1 align="center">Questions</h1>
 <br/>
+
+<br/>
+<form class="d-flex" method="GET">
+        <input class="form-control me-2" type="search" placeholder="Unit" name="a">
+        <input class="form-control me-2" type="search" placeholder="School" name="b">
+        <input class="form-control me-2" type="search" placeholder="Course Code" name="c">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+</form>
+<br>
 <div id = "posts">
     {%for question in Questions%}
      <div class="shadow lg-3 mb-5 bg-body rounded">
@@ -60,7 +69,7 @@
                   <ul class="dropdown-menu">
                     <li>
                       <a
-                        href="/delete-question/{{question.id}}"
+                        href="/delete-questionchat/{{question_comment.id}}"
                         class="dropdown-item"
                         >Delete</a
                       >

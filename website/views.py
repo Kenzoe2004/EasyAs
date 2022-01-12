@@ -408,8 +408,15 @@ def view_users():
 @views.route("/Tests")
 @login_required
 def view_Questions():
-    questions = Question.query.all()
-    return render_template('Question.html',Questions=questions,user=current_user)
+    a = request.args.get('a')
+    b = request.args.get('b')
+    c = request.args.get('c')
+    if a or b or c:
+        questions = Question.query.filter(Question.text.contains(a), Question.school.contains(b),Question.Course.contains(c))
+    else:
+        questions = Question.query.all()
+    return render_template('Question.html', user=current_user, Questions=questions)
+   
 
 @views.route("/create-question", methods=['GET', 'POST'])
 @login_required
@@ -435,7 +442,7 @@ def create_Questions():
             db.session.add(question)
             db.session.commit()
             flash('Post created!', category='success')
-            return redirect(url_for('views.home'))
+            return redirect(url_for('views.view_Questions'))
 
     return render_template('create-question.html', user=current_user)
 
@@ -471,7 +478,7 @@ def delete_questionchat(question_comment_id):
        db.session.commit()
        flash('deleted successfully',category='sucess')
 
-   return redirect(url_for('views.view_message'))
+   return redirect(url_for('views.view_Questions'))
 
 @views.route("/delete-question/<id>")
 @login_required
@@ -497,4 +504,4 @@ def delete_question(id):
             db.session.delete(question)
             db.session.commit()
             flash('Post deleted.', category='success')
-        return redirect(url_for('views.home'))
+        return redirect(url_for('views.view_Questions'))
