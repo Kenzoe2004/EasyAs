@@ -29,8 +29,8 @@ class Post(db.Model):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     author = db.Column(db.Integer, db.ForeignKey(
         'user.id', ondelete="CASCADE"), nullable=False)
-    imgid = db.Column(db.Integer, db.ForeignKey(
-        'img.id', ondelete="CASCADE"), nullable=False)
+    img_name = db.Column(db.Text, nullable=False)
+    img = db.Column(db.LargeBinary, nullable=False) 
     Course = db.Column(db.Text, nullable=False)
     school = db.Column(db.Text, nullable=False)
     comments = db.relationship('Comment', backref='post', passive_deletes=True)
@@ -45,12 +45,12 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey(
         'post.id', ondelete="CASCADE"), nullable=False)
 
-class Img(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    img = db.Column(db.Text, nullable=False)
-    name = db.Column(db.Text, nullable=False)
-    mimetype = db.Column(db.Text, nullable=False)
-    db.relationship('Post', backref='img', passive_deletes=True)
+# class Img(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     img = db.Column(db.Text, nullable=False)
+#     name = db.Column(db.Text, nullable=False)
+#     mimetype = db.Column(db.Text, nullable=False)
+#     db.relationship('Post', backref='img', passive_deletes=True)
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -87,8 +87,7 @@ class Question(db.Model):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     author = db.Column(db.Integer, db.ForeignKey(
         'user.id', ondelete="CASCADE"), nullable=False)
-    imgid = db.Column(db.Integer, db.ForeignKey(
-        'img.id', ondelete="CASCADE"), nullable=False)
+    img = db.Column(db.LargeBinary, nullable=False)
     Course = db.Column(db.Text, nullable=False)
     school = db.Column(db.Text, nullable=False)
     comments = db.relationship('Question_comment', backref='question', passive_deletes=True)

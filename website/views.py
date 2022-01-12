@@ -1,11 +1,12 @@
 import os
 from flask import Blueprint, render_template, request, flash, redirect, url_for,Response
-from werkzeug.utils import secure_filename
+from werkzeug.utils import secure_filename, send_file
 from flask_login import login_required, current_user
-from .models import Post, Img , User,Message,Comment,Chat_comment,Question_comment,Question
+from .models import Post, User,Message,Comment,Chat_comment,Question_comment,Question
 from . import db
 from werkzeug.security import  check_password_hash
 from os import path
+from io import BytesIO
 views = Blueprint("views", __name__)
 
 
@@ -19,7 +20,7 @@ def intro():
 def home():
     user=current_user
     if user.is_authenticated:
-        flash("Hey you migth wanna check for new messages",category='sucess')
+        flash("Hey you might wanna check for new messages",category='sucess')
         q = request.args.get('q')
         if q:
             posts = Post.query.filter(Post.text.contains(q))
@@ -46,17 +47,24 @@ def create_post():
             flash('Post cannot be empty', category='error')
         else:
             filename = secure_filename(pic.filename)
-            mimetype = pic.mimetype
-            img = Img(img=pic.read(), name=filename, mimetype=mimetype)
-            db.session.add(img)
-            db.session.commit()
-            post = Post(text=text, author=current_user.id,imgid=img.id,school=school,Course=Course)
+
+            post = Post(text=text, author=current_user.id,img_name=filename ,img=pic.read(),school=school,Course=Course)
             db.session.add(post)
             db.session.commit()
             flash('Post created!', category='success')
             return redirect(url_for('views.home'))
 
     return render_template('create-post.html', user=current_user)
+
+@views.route("/download")
+@login_required
+def download():
+    post_id = request.args.get('postid')
+    if post_id:
+        post = Post.query.filter_by(id=post_id).first()
+        return send_file(BytesIO(post.img),download_name=post.img_name ,environ=request.environ, as_attachment=True)
+    else:
+        return redirect(url_for('views.home'))
 
 
 @views.route("/delete-post/<id>")
