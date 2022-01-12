@@ -91,11 +91,15 @@ def delete_post(id):
     else:
         for comment in post.comments:
             db.session.delete(comment)
-            db.session.commit() #2.9.3
+            db.session.commit()
         db.session.delete(post)
         db.session.commit()
         flash('Post deleted.', category='success')
     return redirect(url_for('views.home'))
+
+
+
+
 
 @views.route("/show")
 @login_required
