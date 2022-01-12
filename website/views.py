@@ -91,22 +91,11 @@ def delete_post(id):
     else:
         for comment in post.comments:
             db.session.delete(comment)
-            db.session.commit()
+            db.session.commit() #2.9.3
         db.session.delete(post)
         db.session.commit()
         flash('Post deleted.', category='success')
     return redirect(url_for('views.home'))
-
-
-
-@views.route("/IMG/<imgid>")
-@login_required
-def get_img(imgid):
-    img = Img.query.filter_by(id=imgid).first()
-    if not img:
-        flash('no image.', category='error')
-
-    return Response(img.img, mimetype=img.mimetype)
 
 @views.route("/show")
 @login_required
