@@ -434,11 +434,8 @@ def create_Questions():
             flash('Post cannot be empty', category='error')
         else:
             filename = secure_filename(pic.filename)
-            mimetype = pic.mimetype
-            img = Img(img=pic.read(), name=filename, mimetype=mimetype)
-            db.session.add(img)
-            db.session.commit()
-            question = Question(text=text, author=current_user.id,imgid=img.id,school=school,Course=Course)
+            question = Question(text=text, author=current_user.id,img_name=filename ,img=pic.read(),school=school,Course=Course)
+
             db.session.add(question)
             db.session.commit()
             flash('Post created!', category='success')
