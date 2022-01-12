@@ -87,6 +87,7 @@ class Question(db.Model):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     author = db.Column(db.Integer, db.ForeignKey(
         'user.id', ondelete="CASCADE"), nullable=False)
+    img_name = db.Column(db.Text, nullable=False)
     img = db.Column(db.LargeBinary, nullable=False)
     Course = db.Column(db.Text, nullable=False)
     school = db.Column(db.Text, nullable=False)
