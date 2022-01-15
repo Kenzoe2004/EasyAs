@@ -22,23 +22,28 @@
                     </div>
                 </div>
 
-                <a href="/posts/{{question.user.id}}">{{question.user.username}}</a>
+                <a href="/user-questions/{{question.author}}">{{question.user.username}}</a>
                 <a>School: {{question.school}}</a>
-                <a>Course Code: {{question.Course}}</a> {% if user.id == question.author %}
+                <a>Course Code: {{question.Course}}</a>
                 <div class="btn-group" role="group">
                     <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               Dropdown
              </button>
                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        {% if user.id == question.author or user.id == 1 %}
                         <li><a class="dropdown-item" href="/delete-question/{{question.id}}">Delete</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item" href="/create-message">Send Chat Request</a></li>
+                        <li><a class="dropdown-item" href="/posts/{{question.author}}">Users Posts</a></li>
+                        <li><a class="dropdown-item" href="/user-questions/{{question.author}}">Users Questions</a></li>
                     </ul>
                 </div>
-                {% endif %}
+
             </div>
             <div class="card-body">
                 <div class="card-text">{{question.text}}
                 </div>
-                <div class="card-text"><a href="/download?qnid={{question.id}}">Click Here!/a>
+                <div class="card-text"><a href="/download?qnid={{question.id}}">Click Here!</a>
                 </div>
                 <br>
                 <div class="collapse" id="comments-{{question.id}}">
