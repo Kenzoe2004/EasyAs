@@ -1,5 +1,6 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
-<h1 align="center"> Posts</h1>
+<h1 align="center">Users Posts</h1>
+<br/>
 <br/>
 <div id="posts">
     {%for post in posts%}
@@ -8,12 +9,10 @@
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div class="col-4">
                     <div style="width:5rem">
-
                         <img class="rounded-circle w-100" src="{{ url_for('static', filename='profile_pics/' + post.user.profileimg) }}">
                     </div>
                 </div>
-
-                <a href="/posts/{{post.author}}">{{post.user.username}}</a>
+                <a href="/posts/{{post.user.username}}">{{post.user.username}}</a>
                 <a>School: {{post.school}}</a>
                 <a>Course Code: {{post.Course}}</a>
                 <div class="btn-group" role="group">
@@ -21,15 +20,13 @@
               Dropdown
              </button>
                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        {% if user.id == post.author %}
+                        {% if user.id == post.author or user.id == 1 %}
                         <li><a class="dropdown-item" href="/delete-post/{{post.id}}">Delete</a></li>
                         {% endif %}
                         <li><a class="dropdown-item" href="/create-message">Send Chat Request</a></li>
-                        <li><a class="dropdown-item" href="/user-questions/{{post.author}}">Users Questions</a></li>
-                        <li><a class="dropdown-item" href="/posts/{{post.author}}">Users Posts</a></li>
+                        <li><a class="dropdown-item" href="/user-questions/{{post.author}}">Questions</a></li>
                     </ul>
                 </div>
-
             </div>
             <div class="card-body">
                 <div class="card-text">{{post.text}}
@@ -95,5 +92,4 @@
                             <br/> {% endfor %}
                         </div>
 
-
-                        {% endblock %}
+{% endblock %}

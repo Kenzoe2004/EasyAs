@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block title %}Advance Search{% endblock %} {% block content
 %}
 <br/>
-<h1 align="center">Users</h1>
+<h1 align="center"> Admin-Users</h1>
 <br/>
 <form class="d-flex" method="GET">
         <input class="form-control me-2" type="search" placeholder="Username of the user you are looking for" name="c">
@@ -26,6 +26,8 @@
              Dropdown
             </button>
              <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                 <li><a class="dropdown-item" href="/Admin-delete/{{user.id}}">Band User</a></li>
+                 <li><a class="dropdown-item" href="/Admin-undelete/{{user.id}}">Unband User</a></li>
                  <li><a class="dropdown-item" href="/create-message">Send Chat Request </a></li>
                  <li><a class="dropdown-item" href="/user-questions/{{user.id}}">Questions</a></li>
                  <li><a class="dropdown-item" href="/posts/{{user.id}}">Users Posts</a></li>

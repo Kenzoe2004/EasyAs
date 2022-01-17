@@ -164,7 +164,7 @@ def Admin():
 @views.route("/Admin-delete/<author>")
 @login_required
 def Admindelete(author):
-    user = User.query.filter_by(username=author).first()
+    user = User.query.filter_by(id=author).first()
     if user:
         db.session()
         user2 = user.userimposterid
@@ -368,7 +368,7 @@ def delete_message(id):
 @views.route("/Admin-undelete/<author>")
 @login_required
 def AdminUndelete(author):
-    user = User.query.filter_by(username=author).first()
+    user = User.query.filter_by(id=author).first()
     if user:
         db.session()
         user2 = user.userimposterid
@@ -386,7 +386,7 @@ def view_users():
     if c:
         users = User.query.filter(User.username.contains(c))
         flash(f'These are all the users with the name {c}', category='success')
-        return render_template('Find new friends.html', users=users)
+        return render_template('Find new friends.html', users=users )
     else:
         return render_template('Find new friends.html')
 
@@ -500,7 +500,49 @@ def delete_question(id):
             flash('Post deleted.', category='success')
         return redirect(url_for('views.view_Questions'))
 
+<<<<<<< HEAD
 @views.errorhandler(404)
 def error_404(error):
     print("hi")
     return render_template('404.html'), 404
+=======
+@views.route("/posts/<author>")
+@login_required
+def posts_user(author):
+    user = current_user
+    if user.is_authenticated:
+        flash("Hey you might wanna check for new messages", category='sucess')
+        q = request.args.get('q')
+        if q:
+            posts = Post.query.filter(Post.text.contains(q))
+        else:
+            posts = Post.query.filter_by(author=author)
+        return render_template("Users-post.html", user=current_user, posts=posts)
+    else:
+        return render_template('Intro.html')
+
+
+@views.route("/user-questions/<author>")
+@login_required
+def view_UsersQuestions(author):
+    questions = Question.query.filter_by(author=author)
+    return render_template('User-Questions.html', user=current_user, Questions=questions)
+
+
+@views.route("/Admin-search", methods=['GET', 'POST'])
+@login_required
+def view_Adminusers():
+    id = current_user.id
+    if id == 1:
+        c = request.args.get('c')
+        if c:
+            users = User.query.filter(User.username.contains(c))
+            flash(f'These are all the users with the name {c}', category='success')
+            return render_template('Admin-Finder.html', users=users )
+        else:
+            return render_template('Admin-Finder.html')
+
+    else:
+        flash("Current user not a Admin", category='error')
+        return redirect(url_for('views.home'))
+>>>>>>> e7c5c63ca9838d5b06355bd6fd2eabadfae1365e
