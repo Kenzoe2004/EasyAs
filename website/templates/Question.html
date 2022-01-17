@@ -38,7 +38,7 @@
             <div class="card-body">
                 <div class="card-text">{{question.text}}
                 </div>
-                <div class="card-text"><a href="/download?qnid={{question.id}}">Click Here!/a>
+                <div class="card-text"><a href="/download?qnid={{question.id}}">Click Here!</a>
                 </div>
                 <br>
                 <div class="collapse" id="comments-{{question.id}}">
@@ -83,21 +83,21 @@
         <a data-bs-toggle="collapse" href="#comments-{{question.id}}" role="button">
           <small>View {{question.comments|length}} Comments</small>
         </a> {% else %}
-                    <small class="text-muted">No Comments</small> {% endif %}
-                    </p>
-                    <form class="input-group mb-3" method="POST" action="/create-question/{{question.id}}">
-                        <input type="text" id="text" name="text" class="form-control" placeholder="Comment something!" />
+                                        <small class="text-muted">No Comments</small> {% endif %}
+                                        </p>
+                                        <form class="input-group mb-3" method="POST" action="/create-question/{{question.id}}">
+                                            <input type="text" id="text" name="text" class="form-control" placeholder="Comment something!" />
 
-                        <button type="submit" class="btn btn-primary">Comment</button>
-                    </form>
-                    <div class="card-footer text-muted">
-                        {{question.date_created}}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br/> {% endfor %}
-    </div>
+                                            <button type="submit" class="btn btn-primary">Comment</button>
+                                        </form>
+                                        <div class="card-footer text-muted">
+                                            {{question.date_created}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/> {% endfor %}
+                        </div>
 
 
-    {% endblock %}
+                        {% endblock %}

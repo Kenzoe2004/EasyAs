@@ -499,3 +499,8 @@ def delete_question(id):
             db.session.commit()
             flash('Post deleted.', category='success')
         return redirect(url_for('views.view_Questions'))
+
+@views.errorhandler(404)
+def error_404(error):
+    print("hi")
+    return render_template('404.html'), 404
