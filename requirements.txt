@@ -10,5 +10,7 @@ Jinja2==3.0.3
 MarkupSafe==2.0.1
 psycopg2==2.9.3
 psycopg2-binary==2.9.3
+Pyrebase-t==1.0.28
 SQLAlchemy==1.4.29
+threadpoolctl==2.1.0
 Werkzeug==2.0.2
