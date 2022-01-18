@@ -1,25 +1,23 @@
-{% extends "base.html" %} {% block title %}Advance Search{% endblock %} {% block content
-%}
+{% extends "base.html" %} {% block title %}Advance Search{% endblock %} {% block content %}
 <br/>
 <h1 align="center">Super Search Posts</h1>
 <br/>
 <form class="d-flex" method="GET">
-        <input class="form-control me-2" type="search" placeholder="Unit" name="a">
-        <input class="form-control me-2" type="search" placeholder="School" name="b">
-        <input class="form-control me-2" type="search" placeholder="Course Code" name="c">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+    <input class="form-control me-2" type="search" placeholder="Unit" name="a">
+    <input class="form-control me-2" type="search" placeholder="School" name="b">
+    <input class="form-control me-2" type="search" placeholder="Course Code" name="c">
+    <button class="btn btn-outline-success" type="submit">Search</button>
 </form>
 <br/>
-<div id = "posts">
-    <br/>
-    {%for post in posts%}
+<div id="posts">
+    <br/> {%for post in posts%}
     <div class="shadow lg-3 mb-5 bg-body rounded">
         <div class="card border-dark">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <div class="col-4">
                     <div style="width:5rem">
 
-                        <img class="rounded-circle w-100" src="{{ url_for('static', filename='profile_pics/' + post.user.profileimg) }}">
+                        <img class="rounded-circle w-100" src="{{ post.user.profile_img_url }}">
                     </div>
                 </div>
 
