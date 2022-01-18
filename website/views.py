@@ -14,6 +14,10 @@ views = Blueprint("views", __name__)
 def intro():
     return render_template('Intro.html')
 
+@views.route("/About-us")
+def About():
+    return render_template('About-Us.html')
+
 @views.route("/")
 @views.route("/home")
 # @login_required
@@ -40,8 +44,8 @@ def create_post():
     if request.method == "POST":
         text = request.form.get('text')
         pic = request.files['pic']
-        school = request.form.get('school')
-        Course = request.form.get('Course')
+        school = request.form.get('school').lower()
+        Course = request.form.get('Course').lower()
 
         if not text and not Course and not school:
             flash('Post cannot be empty', category='error')
@@ -108,7 +112,7 @@ def show():
     b = request.args.get('b')
     c = request.args.get('c')
     if a or b or c:
-        posts = Post.query.filter(Post.text.contains(a),Post.school.contains(b),Post.Course.contains(c))
+        posts = Post.query.filter(Post.text.contains(a),Post.school.contains(b.lower()),Post.Course.contains(c.lower()))
     else:
         posts = Post.query.all()
     return render_template('Show.html', user=current_user, posts=posts)
@@ -147,8 +151,8 @@ def Admin():
     id = current_user.id
     if id == 1:
         a = request.args.get('a')
-        b = request.args.get('b')
-        c = request.args.get('c')
+        b = request.args.get('b').lower()
+        c = request.args.get('c').lower()
         if a or b or c:
             posts = Post.query.filter(Post.text.contains(a), Post.school.contains(b), Post.Course.contains(c))
         else:
@@ -409,7 +413,7 @@ def view_Questions():
     b = request.args.get('b')
     c = request.args.get('c')
     if a or b or c:
-        questions = Question.query.filter(Question.text.contains(a), Question.school.contains(b),Question.Course.contains(c))
+        questions = Question.query.filter(Question.text.contains(a), Question.school.contains(b.lower()),Question.Course.contains(c.lower()))
     else:
         questions = Question.query.all()
     return render_template('Question.html', user=current_user, Questions=questions)
@@ -424,8 +428,8 @@ def create_Questions():
     if request.method == "POST":
         text = request.form.get('text')
         pic = request.files['pic']
-        school = request.form.get('school')
-        Course = request.form.get('Course')
+        school = request.form.get('school').lower()
+        Course = request.form.get('Course').lower()
 
         if not text and not Course and not school:
             flash('Post cannot be empty', category='error')
@@ -539,3 +543,4 @@ def view_Adminusers():
     else:
         flash("Current user not a Admin", category='error')
         return redirect(url_for('views.home'))
+
