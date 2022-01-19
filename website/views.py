@@ -114,13 +114,13 @@ def download():
     qn_id = request.args.get('qnid')
     if post_id:
         post = Post.query.filter_by(id=post_id).first()
-        if len(post.img.decode('utf-8'))>0:
+        if len(post.img)>0:
             return send_file(BytesIO(post.img), download_name=post.img_name, environ=request.environ, as_attachment=True)
         else:
             return redirect(url_for('views.home'))
     elif qn_id:
         qn = Question.query.filter_by(id=qn_id).first()
-        if len(qn.img.decode('utf-8'))>0:
+        if len(qn.img)>0:
             return send_file(BytesIO(qn.img), download_name=qn.img_name, environ=request.environ, as_attachment=True)
         else:
             return redirect(url_for('views.home'))
