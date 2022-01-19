@@ -32,8 +32,8 @@ class Post(db.Model):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     author = db.Column(db.Integer, db.ForeignKey(
         'user.id', ondelete="CASCADE"), nullable=False)
-    img_name = db.Column(db.Text, nullable=False)
-    img = db.Column(db.LargeBinary, nullable=False) 
+    img_name = db.Column(db.Text, nullable=True)
+    img = db.Column(db.Text, nullable=True) 
     Course = db.Column(db.Text, nullable=False)
     school = db.Column(db.Text, nullable=False)
     comments = db.relationship('Comment', backref='post', passive_deletes=True)
@@ -90,8 +90,8 @@ class Question(db.Model):
     date_created = db.Column(db.DateTime(timezone=True), default=func.now())
     author = db.Column(db.Integer, db.ForeignKey(
         'user.id', ondelete="CASCADE"), nullable=False)
-    img_name = db.Column(db.Text, nullable=False)
-    img = db.Column(db.LargeBinary, nullable=False)
+    img_name = db.Column(db.Text, nullable=True)
+    img = db.Column(db.Text, nullable=True)
     Course = db.Column(db.Text, nullable=False)
     school = db.Column(db.Text, nullable=False)
     comments = db.relationship('Question_comment', backref='question', passive_deletes=True)

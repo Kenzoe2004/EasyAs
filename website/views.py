@@ -96,10 +96,16 @@ def create_post():
             flash('Post cannot be empty', category='error')
         else:
             filename = secure_filename(pic.filename)
+            filename1 = filename.split('.')
 
-            post = Post(text=text, author=current_user.id, img_name=filename,
-                        img=pic.read(), school=school, Course=Course)
+
+            post = Post(text=text, author=current_user.id, img_name=filename,img="", school=school, Course=Course)
             db.session.add(post)
+            db.session.commit()
+            db.session.flush()
+            storage.child("post_upload").child(f"{post.id}.{filename1[len(filename1)-1]}").put(pic)
+            url = storage.child("post_upload").child(f"{post.id}.{filename1[len(filename1)-1]}").get_url(idToken)
+            post.img = url
             db.session.commit()
             flash('Post created!', category='success')
             return redirect(url_for('views.home'))
@@ -115,13 +121,13 @@ def download():
     if post_id:
         post = Post.query.filter_by(id=post_id).first()
         if len(post.img)>0:
-            return send_file(BytesIO(post.img), download_name=post.img_name, environ=request.environ, as_attachment=True)
+            return redirect(post.img)
         else:
             return redirect(url_for('views.home'))
     elif qn_id:
         qn = Question.query.filter_by(id=qn_id).first()
         if len(qn.img)>0:
-            return send_file(BytesIO(qn.img), download_name=qn.img_name, environ=request.environ, as_attachment=True)
+            return redirect(qn.img)
         else:
             return redirect(url_for('views.home'))
     else:
@@ -494,14 +500,19 @@ def create_Questions():
             flash('Post cannot be empty', category='error')
         else:
             filename = secure_filename(pic.filename)
-            question = Question(text=text, author=current_user.id,
-                                img_name=filename, img=pic.read(), school=school, Course=Course)
+            filename1 = filename.split('.')
 
+            question = Question(text=text, author=current_user.id, img_name=filename,img="", school=school, Course=Course)
             db.session.add(question)
+            db.session.commit()
+            db.session.flush()
+            storage.child("qn_upload").child(f"{question.id}.{filename1[len(filename1)-1]}").put(pic)
+            url = storage.child("qn_upload").child(f"{question.id}.{filename1[len(filename1)-1]}").get_url(idToken)
+            question.img = url
             db.session.commit()
             flash('Post created!', category='success')
             return redirect(url_for('views.view_Questions'))
-
+            
     return render_template('create-question.html', user=current_user)
 
 
