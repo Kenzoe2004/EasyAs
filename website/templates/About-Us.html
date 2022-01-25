@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "base.html" %} {% block title %}About Us{% endblock %} {% block content
 %}
 <h1 align="center">About Us</h1>
@@ -66,4 +67,72 @@
 </div>
 </div>
 
+=======
+{% extends "base.html" %} {% block title %}About Us{% endblock %} {% block content %}
+<h1 align="center">About Us</h1>
+<div class="row">
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 align="center" class="card-title">Founder</h5>
+                <p class="card-text">
+                    <div align="center">
+                        <div style="width:20rem">
+                            <a><img class="rounded-circle w-50" src="{{ url_for('static', filename='profile_pics/akash.jfif') }}"></a>
+                        </div>
+                    </div>
+                    <br>
+                    <a>Name: Akash</a>
+                    <br>
+                    <a>Username: Kenzoe</a>
+                    <br>
+                    <a>Age:17</a>
+                    <br>
+                    <a>Role: Head of Management , Chief Development Manager </a>
+                    <br>
+                    <a>Contact: easyas2004@mail.com</a>
+                </p>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 align="center" class="card-title">Co-Founder</h5>
+                <p class="card-text">
+                    <div align="center">
+                        <div style="width:20rem">
+                            <a><img class="rounded-circle w-50" src="{{ url_for('static', filename='profile_pics/aakarsh.jpeg') }}"></a>
+                        </div>
+                    </div>
+                    <br>
+                    <a>Name: Aakarsh</a>
+                    <br>
+                    <a>Username: Aakarsh-Kumar </a>
+                    <br>
+                    <a>Age: 16</a>
+                    <br>
+                    <a>Role: Head of Software development , Chief Operations Officer </a>
+                    <br>
+                    <a>Contact: aakarsh2504@gmail.com</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+<br>
+<div class="shadow lg-3 mb-5 bg-body rounded">
+    <div class="card-header">What is Easy A's
+    </div>
+    <div class="card-body">
+        <p class="card-text">Easy A's, were you can connect with other students to improve you academic skills and grow your knowledge. Easy A's Beta is designed to help students achieve greater academic success by personalizing education. Keep in mind that this is a beta
+            version of Easy A's so there might still be some bugs that were missed by delopers during test trails , if you spot any bugs or glitches please report it to the mods or the Admins in the discord sever(Link will be given in the comments) or
+            contact easyas2004@gmail.com. As stated before this is a beta version which means as a user you will see this website grow and evolve to better needs your needs as a user.</p>
+    </div>
+</div>
+
+>>>>>>> 52b0b3a95500df3b20f8ad28fd8f5a478b2364bd
 {% endblock %}

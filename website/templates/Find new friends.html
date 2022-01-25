@@ -1,45 +1,40 @@
-{% extends "base.html" %} {% block title %}Advance Search{% endblock %} {% block content
-%}
+{% extends "base.html" %} {% block title %}Advance Search{% endblock %} {% block content %}
 <br/>
 <h1 align="center">Users</h1>
 <br/>
 <form class="d-flex" method="GET">
-        <input class="form-control me-2" type="search" placeholder="Username of the user you are looking for" name="c">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+    <input class="form-control me-2" type="search" placeholder="Username of the user you are looking for" name="c">
+    <button class="btn btn-outline-success" type="submit">Search</button>
 </form>
-<br/>
-{% for user in users%}
-<div id = "users">
-   <div class = "card border-dark">
-       <div
-       class = "card-header d-flex justify-content-between align-items-center"
-       >
-           <div class="col-4" >
-           <div style="width:5rem" >
+<br/> {% for user in users%}
+<div id="users">
+    <div class="card border-dark">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="col-4">
+                <div style="width:5rem">
 
-            <img class="rounded-circle w-100" src="{{ url_for('static', filename='profile_pics/' + user.profileimg) }}">
-           </div>
-             </div>
-          <a>From:<a href = "#">{{user.username}}</a></a>
-        <div class="btn-group" role="group">
-             <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img class="rounded-circle w-100" src="{{ user.profile_img_url }}">
+                </div>
+            </div>
+            <a>From:<a href = "#">{{user.username}}</a></a>
+            <div class="btn-group" role="group">
+                <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
              Dropdown
             </button>
-             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                 <li><a class="dropdown-item" href="/create-message">Send Chat Request </a></li>
-                 <li><a class="dropdown-item" href="/user-questions/{{user.id}}">Questions</a></li>
-                 <li><a class="dropdown-item" href="/posts/{{user.id}}">Users Posts</a></li>
-             </ul>
-           </div>
-       </div>
-       <div class="card-body">
-           <div class = "card-footer text-muted">
-               {{user.date_created}}
-           </div>
-       </div>
-   </div>
-   <br/>
-    {% endfor %}
+                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                    <li><a class="dropdown-item" href="/create-message">Send Chat Request </a></li>
+                    <li><a class="dropdown-item" href="/user-questions/{{user.id}}">Questions</a></li>
+                    <li><a class="dropdown-item" href="/posts/{{user.id}}">Users Posts</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="card-footer text-muted">
+                {{user.date_created}}
+            </div>
+        </div>
+    </div>
+    <br/> {% endfor %}
 </div>
 
 

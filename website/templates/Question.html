@@ -18,7 +18,7 @@
                 <div class="col-4">
                     <div style="width:5rem">
 
-                        <img class="rounded-circle w-100" src="{{ url_for('static', filename='profile_pics/' + question.user.profileimg) }}">
+                        <img class="rounded-circle w-100" src="{{ question.user.profile_img_url }}">
                     </div>
                 </div>
 
@@ -88,21 +88,21 @@
         <a data-bs-toggle="collapse" href="#comments-{{question.id}}" role="button">
           <small>View {{question.comments|length}} Comments</small>
         </a> {% else %}
-                    <small class="text-muted">No Comments</small> {% endif %}
-                    </p>
-                    <form class="input-group mb-3" method="POST" action="/create-question/{{question.id}}">
-                        <input type="text" id="text" name="text" class="form-control" placeholder="Comment something!" />
+                                        <small class="text-muted">No Comments</small> {% endif %}
+                                        </p>
+                                        <form class="input-group mb-3" method="POST" action="/create-question/{{question.id}}">
+                                            <input type="text" id="text" name="text" class="form-control" placeholder="Comment something!" />
 
-                        <button type="submit" class="btn btn-primary">Comment</button>
-                    </form>
-                    <div class="card-footer text-muted">
-                        {{question.date_created}}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br/> {% endfor %}
-    </div>
+                                            <button type="submit" class="btn btn-primary">Comment</button>
+                                        </form>
+                                        <div class="card-footer text-muted">
+                                            {{question.date_created}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/> {% endfor %}
+                        </div>
 
 
-    {% endblock %}
+                        {% endblock %}

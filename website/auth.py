@@ -113,13 +113,14 @@ def verify1():
         email = request.form.get("email")
         if otp_user.isdigit():
             if int(otp_user) == otp_dict[email]:
-                otp_dict.pop(email)
+                
                 new_user = User(email=email, username=username, password=generate_password_hash(
-                password, method='sha256'))
+                password, method='sha256'),profile_img="010101")
                 db.session.add(new_user)
                 db.session.commit()
                 login_user(new_user, remember=True)
                 flash('User created!')
+                otp_dict.pop(email)
                 return redirect(url_for('views.home'))
             else:
                 flash('OTP is incorrect.', category='error')

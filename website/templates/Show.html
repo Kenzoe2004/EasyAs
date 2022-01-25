@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block title %}Advance Search{% endblock %} {% block content %}
 <br/>
-<h1 align="center">Admin's Super Search Posts</h1>
+<h1 align="center">Super Search Posts</h1>
 <br/>
 <form class="d-flex" method="GET">
     <input class="form-control me-2" type="search" placeholder="Unit" name="a">
@@ -29,11 +29,11 @@
               Dropdown
              </button>
                     <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                        {% if user.id == post.author %}
                         <li><a class="dropdown-item" href="/delete-post/{{post.id}}">Delete</a></li>
-                        <li><a class="dropdown-item" href="/Admin-delete/{{post.author}}">Band User</a></li>
-                        <li><a class="dropdown-item" href="/Admin-undelete/{{post.author}}">Unband User</a></li>
+                        {% endif %}
                         <li><a class="dropdown-item" href="/create-message">Send Chat Request</a></li>
-                        <li><a class="dropdown-item" href="/user-questions/{{post.author}}">Questions</a></li>
+                        <li><a class="dropdown-item" href="/user-questions/{{post.author}}">Users Questions</a></li>
                         <li><a class="dropdown-item" href="/posts/{{post.author}}">Users Posts</a></li>
                     </ul>
                 </div>
@@ -58,7 +58,7 @@
               </div>
               <div>
                 <small class="text-muted"> {{comment.date_created}}</small>
-
+                {% if user.id == comment.author or user.id == post.author %}
                 <div class="btn-group">
                   <button
                     type="button"
@@ -75,7 +75,7 @@
                     </li>
                   </ul>
                 </div>
-
+                {% endif %}
               </div>
             </div>
             {% endfor %}
@@ -102,5 +102,6 @@
                             </div>
                             <br/> {% endfor %}
                         </div>
+
 
                         {% endblock %}
