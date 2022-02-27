@@ -14,28 +14,7 @@ from sqlalchemy import desc
 
 views = Blueprint("views", __name__)
 
-config = {
-    "apiKey": "AIzaSyBUPHX8nHL4DwCSHZhvoJpsR0aeWuSrFvc",
-    "authDomain": "easyas-edcdf.firebaseapp.com",
-    "projectId": "easyas-edcdf",
-    "storageBucket": "easyas-edcdf.appspot.com",
-    "messagingSenderId": "104832045862",
-    "appId": "1:104832045862:web:0685a5a1deb61822a927e7",
-    "measurementId": "G-SPNCHMPQKS",
-    "serviceAccount": {
-        "type": "service_account",
-        "project_id": "easyas-edcdf",
-        "private_key_id": "c55ec5e4e63cb40ef7c6638ed988e2897377315a",
-        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC6dJRNQuaO2/0g\nCsBc5ykpxcMKKg4hwexPRTkjQ0zg4OMFRKAiHc0fcDJrN3K2GVVeGO1ZlIHfZ/Qv\nawxePO3HiLAtvOLLnpENylIdiDUNTpRb2FmUZ7GOjIgV13AFdvZ4gGlUCc4X79Gn\n3Ij85pnaSRv0JZoPhdiBWBkZkMI2Cim6/Cpp5uVt/fiWnAvLAbSBS4guz4xlutdH\nnyogjBzSdb5AzJCVJxoMshd+L/8/Ep4Xom5UrGRZP9SzLxgUfmr2AwaUq+umqQXd\nj/uPPSoWzxV1dVWIBeJbGf5R2XqYihntvn06GltlXHv/iFhx6Eo74F41oSgSQkRo\n1EUQgQUhAgMBAAECggEAC12t6KPKYC0C2iAtp7wjozs973Gu2Nn0aMSkfgTNO+wZ\niqmrRUkhxufU+vovUPBsZscIOOy3mgHBPd69q0T1jbNEYhVgkd8BoqCRruEtsrj2\njD68/zHu/eyNIx+14W9mCORzBz9tw8HHuv7Tju8Ts92/CXv9TzLuhrvzE77iR97t\n2QM5DLlrLGar7wPrEJFnObRLaBdiQUbKs1hWarua6LfsB1pnD8kwT263qhy1Rtlc\n8jJJ8ebN4Ck4xBDrknZ3XlIKYkM3eV8OY+WCGggC/L+QIMnnN+ByfSP+AtEuyT55\nKz6Wsv/jZ/mLYH/2abeHVqz39Gj24KhbZMuQ7MfEHQKBgQD6GLsBAaCH14FCHs1G\nI9a0VQ4UVkwI2M/HSO/ceb77RD2C55CESNMHoe6PXBXc1FLvP+gDaEKjyHPEueQt\nP2f3owlBGMFiSzgmSy3clfMUbij4f+6zJHq9okJe7VVJhpq9PYuXbyRq9vdgNbxE\nHrcLN6BuxVojANvXYw6u1tPeQwKBgQC+20gDquNeTeTzG5seTwchCfzqsIqKXV4m\n3NkZSypTlNSq5PczDfZhc7u1MUPjxmgI1uFOI6qNLPQ+zEOzDuKvQK/HIXXtegmH\nBCHI4TAhh2uNRNrmMx7THEOGF905b+yEHZldhVUCD+FF8zw5o9959QsHYVoY5JfU\nDbhnfRvCywKBgHQ5Oe5lyyxVwgPwPITz8rsrK7fXws35s9Vw18cl7NLoC43h/w76\nqNdLMYn9yUsugLwefrvWn+FtLh+mI5vDc5VpdsuBrZz4R8fD+DQimyxLZU7WZR9r\nPH8UALQMpy3cF90J1O0zAUGUM7HKRwuBGp9j4nKX1COgKooVxqUJwLvxAoGAa4Dy\nsHYqei0gIDvVhR34owiQONXWQ5fR98wAUXoATnIP1G8COvTLahsZiTdFyWAxq4D2\nCeCXKcw/i7vdClgBIbwrBtx3I5vREAcozJDjXo976mf1cSMsYreR5U894iOEMurF\nP2Nh/bZaKt+WddUzhOudGbwhVtI0H1LXIxvabj8CgYEAl8LEVjkUHoxVrUhswDzO\no1tgPmdGxj8kmc/J6tf7w0vkTbE6+wYWG2g5XeNxxoPx+ZNPeDxuy3J0Qy9O4mcX\nfny92gaW3EXO/GpRsU0f21VUTo9qGnoZtj4IsLJDFWiKsqfY6D78853L3VXeCthL\nktDrnbldFYFakZLTKrFIICo=\n-----END PRIVATE KEY-----\n",
-        "client_email": "firebase-adminsdk-6wuiq@easyas-edcdf.iam.gserviceaccount.com",
-        "client_id": "116874794661608759169",
-        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-        "token_uri": "https://oauth2.googleapis.com/token",
-        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-6wuiq%40easyas-edcdf.iam.gserviceaccount.com"
-    },
-    "databaseURL": "gs://easyas-edcdf.appspot.com"
-}
+
 config = {
     "apiKey": "AIzaSyDSYMVWxCQ0JXvi59mWWaWL6LO9RQRlMes",
     "authDomain": "easyas-local.firebaseapp.com",
@@ -57,6 +36,29 @@ config = {
         "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-gdyj9%40easyas-local.iam.gserviceaccount.com"
     },
     "databaseURL": "gs://easyas-local.appspot.com"
+}
+
+config = {
+    "apiKey": "AIzaSyBUPHX8nHL4DwCSHZhvoJpsR0aeWuSrFvc",
+    "authDomain": "easyas-edcdf.firebaseapp.com",
+    "projectId": "easyas-edcdf",
+    "storageBucket": "easyas-edcdf.appspot.com",
+    "messagingSenderId": "104832045862",
+    "appId": "1:104832045862:web:0685a5a1deb61822a927e7",
+    "measurementId": "G-SPNCHMPQKS",
+    "serviceAccount": {
+        "type": "service_account",
+        "project_id": "easyas-edcdf",
+        "private_key_id": "c55ec5e4e63cb40ef7c6638ed988e2897377315a",
+        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC6dJRNQuaO2/0g\nCsBc5ykpxcMKKg4hwexPRTkjQ0zg4OMFRKAiHc0fcDJrN3K2GVVeGO1ZlIHfZ/Qv\nawxePO3HiLAtvOLLnpENylIdiDUNTpRb2FmUZ7GOjIgV13AFdvZ4gGlUCc4X79Gn\n3Ij85pnaSRv0JZoPhdiBWBkZkMI2Cim6/Cpp5uVt/fiWnAvLAbSBS4guz4xlutdH\nnyogjBzSdb5AzJCVJxoMshd+L/8/Ep4Xom5UrGRZP9SzLxgUfmr2AwaUq+umqQXd\nj/uPPSoWzxV1dVWIBeJbGf5R2XqYihntvn06GltlXHv/iFhx6Eo74F41oSgSQkRo\n1EUQgQUhAgMBAAECggEAC12t6KPKYC0C2iAtp7wjozs973Gu2Nn0aMSkfgTNO+wZ\niqmrRUkhxufU+vovUPBsZscIOOy3mgHBPd69q0T1jbNEYhVgkd8BoqCRruEtsrj2\njD68/zHu/eyNIx+14W9mCORzBz9tw8HHuv7Tju8Ts92/CXv9TzLuhrvzE77iR97t\n2QM5DLlrLGar7wPrEJFnObRLaBdiQUbKs1hWarua6LfsB1pnD8kwT263qhy1Rtlc\n8jJJ8ebN4Ck4xBDrknZ3XlIKYkM3eV8OY+WCGggC/L+QIMnnN+ByfSP+AtEuyT55\nKz6Wsv/jZ/mLYH/2abeHVqz39Gj24KhbZMuQ7MfEHQKBgQD6GLsBAaCH14FCHs1G\nI9a0VQ4UVkwI2M/HSO/ceb77RD2C55CESNMHoe6PXBXc1FLvP+gDaEKjyHPEueQt\nP2f3owlBGMFiSzgmSy3clfMUbij4f+6zJHq9okJe7VVJhpq9PYuXbyRq9vdgNbxE\nHrcLN6BuxVojANvXYw6u1tPeQwKBgQC+20gDquNeTeTzG5seTwchCfzqsIqKXV4m\n3NkZSypTlNSq5PczDfZhc7u1MUPjxmgI1uFOI6qNLPQ+zEOzDuKvQK/HIXXtegmH\nBCHI4TAhh2uNRNrmMx7THEOGF905b+yEHZldhVUCD+FF8zw5o9959QsHYVoY5JfU\nDbhnfRvCywKBgHQ5Oe5lyyxVwgPwPITz8rsrK7fXws35s9Vw18cl7NLoC43h/w76\nqNdLMYn9yUsugLwefrvWn+FtLh+mI5vDc5VpdsuBrZz4R8fD+DQimyxLZU7WZR9r\nPH8UALQMpy3cF90J1O0zAUGUM7HKRwuBGp9j4nKX1COgKooVxqUJwLvxAoGAa4Dy\nsHYqei0gIDvVhR34owiQONXWQ5fR98wAUXoATnIP1G8COvTLahsZiTdFyWAxq4D2\nCeCXKcw/i7vdClgBIbwrBtx3I5vREAcozJDjXo976mf1cSMsYreR5U894iOEMurF\nP2Nh/bZaKt+WddUzhOudGbwhVtI0H1LXIxvabj8CgYEAl8LEVjkUHoxVrUhswDzO\no1tgPmdGxj8kmc/J6tf7w0vkTbE6+wYWG2g5XeNxxoPx+ZNPeDxuy3J0Qy9O4mcX\nfny92gaW3EXO/GpRsU0f21VUTo9qGnoZtj4IsLJDFWiKsqfY6D78853L3VXeCthL\nktDrnbldFYFakZLTKrFIICo=\n-----END PRIVATE KEY-----\n",
+        "client_email": "firebase-adminsdk-6wuiq@easyas-edcdf.iam.gserviceaccount.com",
+        "client_id": "116874794661608759169",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-6wuiq%40easyas-edcdf.iam.gserviceaccount.com"
+    },
+    "databaseURL": "gs://easyas-edcdf.appspot.com"
 }
 firebase_storage = pyrebase.initialize_app(config)
 auth = firebase_storage.auth()
