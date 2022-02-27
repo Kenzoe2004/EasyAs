@@ -1,4 +1,5 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content %}
+
 <h1 align="center"> Posts</h1>
 <br/>
 <div id="posts">
@@ -13,9 +14,26 @@
                     </div>
                 </div>
 
-                <a href="/posts/{{post.author}}">{{post.user.username}}</a>
+                <a href="/Viewinfo/{{post.author}}">{{post.user.username}}</a>
                 <a>School: {{post.school}}</a>
                 <a>Course Code: {{post.Course}}</a>
+       <div>
+                <span id="likes-count-{{post.id}}">
+        {{ post.likes|length }}</span>
+        {% if user.id in post.likes|map(attribute="author")|list %}
+        <i
+          class="fas fa-thumbs-up"
+          id="like-button-{{post.id}}"
+          onclick="like({{post.id}})"
+        ></i>
+        {% else %}
+        <i
+          class="far fa-thumbs-up"
+          id="like-button-{{post.id}}"
+          onclick="like({{post.id}})"
+        ></i>
+        {% endif %}
+           </div>
                 <div class="btn-group" role="group">
                     <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               Dropdown
@@ -79,7 +97,8 @@
         <a data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button">
           <small>View {{post.comments|length}} Comments</small>
         </a> {% else %}
-                                        <small class="text-muted">No Comments</small> {% endif %}
+                                        <small class="text-muted">No Comments</small>
+                                        {% endif %}
                                         </p>
                                         <form class="input-group mb-3" method="POST" action="/create-comment/{{post.id}}">
                                             <input type="text" id="text" name="text" class="form-control" placeholder="Comment something!" />
@@ -92,7 +111,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <br/> {% endfor %}
+                            <br/>
+                    {% endfor %}
                         </div>
 
 

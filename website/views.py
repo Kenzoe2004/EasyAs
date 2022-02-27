@@ -1,16 +1,16 @@
 import email
 import os
-from flask import Blueprint, render_template, request, flash, redirect, url_for, Response
+from flask import Blueprint, render_template, request, flash, redirect, url_for, Response,jsonify
 from werkzeug.utils import secure_filename, send_file
 from flask_login import login_required, current_user
-from .models import Post, User, Message, Comment, Chat_comment, Question_comment, Question
+from .models import Post, User, Message, Comment, Chat_comment, Question_comment, Question, Like,Like2
 from . import db
 from werkzeug.security import check_password_hash
 from os import path
 from io import BytesIO
 import pyrebase
 import threading
-
+from sqlalchemy import desc
 
 views = Blueprint("views", __name__)
 
@@ -35,6 +35,28 @@ config = {
         "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-6wuiq%40easyas-edcdf.iam.gserviceaccount.com"
     },
     "databaseURL": "gs://easyas-edcdf.appspot.com"
+}
+config = {
+    "apiKey": "AIzaSyDSYMVWxCQ0JXvi59mWWaWL6LO9RQRlMes",
+    "authDomain": "easyas-local.firebaseapp.com",
+    "projectId": "easyas-local",
+    "storageBucket": "easyas-local.appspot.com",
+    "messagingSenderId": "309013835731",
+    "appId": "1:309013835731:web:778dad3b29201ea63b4926",
+    "measurementId": "G-QNHY0VKT7F",
+    "serviceAccount": {
+        "type": "service_account",
+        "project_id": "easyas-local",
+        "private_key_id": "49c2b5d6929d027e6fb256e3c986ccf66f336ce5",
+        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDVbl7BxwiFmurt\nfwmwQrN+Q8uhiclpzmhrzunevyddZBzS0/VmXx5d9ZfvDGOlKnR9PbFnbVnxYM1I\nA5qyGTRPF3sNpee0tSqznO1Q9QegaOb29+qVVVrNNYAfvywLWSBtcjZxJLn9popa\nfUSDt3z0AhZnNWYDmRLyIEa+r/ScIB/ZnFyiJtCgW0mOKiJj6VmObNEb2SW3KnR2\niV1k31NAEcGM/bvz6qNBvuAqM5hejHakGhxOJqqFL7m6VTq71UWYx3N5WBtW7G3C\nrlJWzl1+fRcImyj9udsm8Q6hVkcN7/nvafEkHe0u9GH2w2NuvGJJgyJER04iIngU\n712RQDYzAgMBAAECggEABTmtBzh8vGylCMh977tKUrKNNzi83iLICq+nqSTr7Uzo\nqb63uNhmUW2UWS1n+SC3dmN+xuX1+ENi8zrnXCniznboM9bWe+WdlIUoiD1fgO1g\njjZWn25WCUUgjGZtSR/W++b6bz2zcgLUS0/a0BC7devhKYi0pSznulbQ9JUxO2tA\nb+A5Hnq2tzv7L5iJYSO7m58fApUue7PeP5gjWQEulGtfdgOVyzgHR0qBaePvay/X\nenD9OTrVS2ROwR7pyaEA8GTyLrt+hNTkchxiLGhK0yl9Hiibb3/ffye+Ln/CPGvG\nmEWolgx5cqZRqHFdXyUxLP/wNN5mdY/EOq5aZHhCdQKBgQD+T7lNkAooJwESnz9h\n0VmWPVjgkFma2OCWnrh3PmLjAcnCuZkyWh1miSGcysM6axd3cSRV2GYFaxbL5hTA\nClih5MkYpivKdDJoZBuVWlulin7HdwQSLXEZmRL5q9V+HunPrvZG1//C03BE+bfj\nglBH/fIxcWZJF8Uw/2A+51ounwKBgQDW2SiLVDFeXupNVoKRt1H6JVMFaeHQxS7U\nmFUtILzNzc4eCTvh8ZVQnTS5dRUN6qPg6z845y81x277zSAGdBfKzzckjIshDE3N\nDBzI04dX6RgIn+n2AkEZJK9cAB9rzo2zibmmrKL+D+0Mg02+Ogimq3AzJeiLyaFc\nEtVj7+rT7QKBgQCgSufld5CvVkZa0n1EzovFIs3OXa3c6C5HQavLnUr/ArWFQy7I\nifxWEMFa7oK3Y6Da7DmW0lsbtzAbPN5/XQYYpPgLzVF0vmC3Y8HvFZEGepEGcIHk\nYzgShmVrcV+TqzB8cy9P3/2Zc2QkVbIOeKjZd7scZvmtwInOJGkpvPEeyQKBgCqB\nkDnwkEvhb22Znf+CS1+4HrLFff215Uv+T2u8PF5jR1I99XEAQNBQKew/M8krEP0g\nzcNOSdLUACslLB7avRJM6NX8UFJbgtD8gn1hDDfiT/T03m7jh0mYLnF/PLgxh2tr\n5iUJpr2pHPcKy0jFZozDAlG8QEPXwmra9wjsoIMJAoGAAhde4YtPsO+EQYpDzRDh\n2vMehyi81dzkAZpEGPvovwVPHko9GbaYhWS7h7bT2GoOr0OawAUy4xn+QNeIT8YJ\nTtbMd5S0+oFmY++LS2eHhr3YzJYFsE5tK6KZmUNdOyAndWSq6qlLV0p7Xfbe+i6z\nKhbg/0ZCMra+AUKIrtRps64=\n-----END PRIVATE KEY-----\n",
+        "client_email": "firebase-adminsdk-gdyj9@easyas-local.iam.gserviceaccount.com",
+        "client_id": "100857396948405176810",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-gdyj9%40easyas-local.iam.gserviceaccount.com"
+    },
+    "databaseURL": "gs://easyas-local.appspot.com"
 }
 firebase_storage = pyrebase.initialize_app(config)
 auth = firebase_storage.auth()
@@ -74,7 +96,7 @@ def home():
         if q:
             posts = Post.query.filter(Post.text.contains(q))
         else:
-            posts = Post.query.all()
+            posts = Post.query.order_by(Post.total_likes.desc()).all()
         return render_template("home.html", user=current_user, posts=posts)
     else:
         return render_template('Intro.html')
@@ -139,10 +161,15 @@ def download():
 def delete_post(id):
     post = Post.query.filter_by(id=id).first()
     comment = Comment.query.filter_by(post_id=id).first()
+    like = Like.query.filter_by(
+        author=current_user.id, post_id=id).first()
 
     if not post:
         flash("Post does not exist.", category='error')
     if current_user.id == 1:
+        for like in post.likes:
+            db.session.delete(like)
+            db.session.commit()
         for comment in post.comments:
             db.session.delete(comment)
             db.session.commit()
@@ -152,12 +179,16 @@ def delete_post(id):
     elif current_user.id != post.author:
         flash('You do not have permission to delete this post.', category='error')
     else:
+        for like in post.likes:
+            db.session.delete(like)
+            db.session.commit()
         for comment in post.comments:
             db.session.delete(comment)
             db.session.commit()
         db.session.delete(post)
         db.session.commit()
         flash('Post deleted.', category='success')
+
     return redirect(url_for('views.home'))
 
 
@@ -168,37 +199,45 @@ def show():
     b = request.args.get('b')
     c = request.args.get('c')
     if a or b or c:
-        posts = Post.query.filter(Post.text.contains(a),Post.school.contains(b.lower()),Post.Course.contains(c.lower()))
+        posts = Post.query.filter(Post.text.contains(a),Post.school.contains(b.lower()),Post.Course.contains(c.lower())).order_by(Post.total_likes.desc()).all()
     else:
-        posts = Post.query.all()
+        posts = Post.query.order_by(Post.total_likes.desc()).all()
     return render_template('Show.html', user=current_user, posts=posts)
 
 
 @views.route("/userinfo", methods=['GET', 'POST'])
 @login_required
 def userinfo():
+    posts = Post.query.filter_by(author=current_user.id).all()
+    questions = Question.query.filter_by(author=current_user.id).all()
     image_file = current_user.profile_img_url
+    listA = []
+    for post in posts:
+        listA.insert(0,len(post.likes))
+    for question in questions:
+        listA.insert(0,len(question.likes))
+    listA=sum(listA)
     if request.method == 'POST':
         user = current_user
         Namechange = request.form.get("userchange")
         if len(Namechange) < 2:
             image_file = current_user.profile_img_url
             flash('New Username too short!', category='error')
-            return render_template('Userinfo.html', user=current_user, profilepic=image_file)
+            return render_template('Userinfo.html', user=current_user, profilepic=image_file,listA=listA,author=current_user)
         username_exists = User.query.filter_by(username=Namechange).first()
         if username_exists:
             image_file = current_user.profile_img_url
             flash('Username taken!!', category='error')
-            return render_template('Userinfo.html', user=current_user, profilepic=image_file)
+            return render_template('Userinfo.html', user=current_user, profilepic=image_file,listA=listA,author=current_user)
         else:
             image_file = current_user.profile_img_url
             db.session()
             user.username = Namechange
             db.session.commit()
             flash('Username updated successfuly', category='success')
-            return render_template('Userinfo.html', user=current_user, profilepic=image_file)
+            return render_template('Userinfo.html', user=current_user, profilepic=image_file,posts=posts,listA=listA,author=current_user)
     else:
-        return render_template('Userinfo.html', user=current_user, profilepic=image_file)
+        return render_template('Userinfo.html', user=current_user, profilepic=image_file,posts=posts,listA=listA,author=current_user)
 
 
 @views.route("/Admin")
@@ -240,6 +279,14 @@ def Admindelete(author):
 @views.route("/change email", methods=['GET', 'POST'])
 @login_required
 def Newemail():
+    posts = Post.query.filter_by(author=current_user.id).all()
+    questions = Question.query.filter_by(author=current_user.id).all()
+    listA = []
+    for post in posts:
+        listA.insert(0, len(post.likes))
+    for question in questions:
+        listA.insert(0, len(question.likes))
+    listA = sum(listA)
     if request.method == 'POST':
         password = request.form.get("password3")
         password2 = request.form.get("password4")
@@ -248,23 +295,23 @@ def Newemail():
         emailchange = request.form.get("emailchange")
         if password != password2:
             flash('Password don\'t match!', category='error')
-            return render_template('Userinfo.html', user=current_user, profilepic=image_file)
+            return render_template('Userinfo.html', user=current_user, profilepic=image_file,listA=listA,author=current_user)
 
         else:
             if check_password_hash(user.password, password):
                 if len(emailchange) < 4:
                     flash('New email too short!', category='error')
-                    return render_template('Userinfo.html', user=current_user, profilepic=image_file)
+                    return render_template('Userinfo.html', user=current_user, profilepic=image_file,listA=listA,author=current_user)
                 email_exists = User.query.filter_by(email=emailchange).first()
                 if email_exists:
                     flash('email taken!!', category='error')
-                    return render_template('Userinfo.html', user=current_user, profilepic=image_file)
+                    return render_template('Userinfo.html', user=current_user, profilepic=image_file,listA=listA,author=current_user)
                 else:
                     db.session()
                     user.email = emailchange
                     db.session.commit()
                     flash('Email updated successfuly', category='success')
-                    return render_template('Userinfo.html', user=current_user, profilepic=image_file)
+                    return render_template('Userinfo.html', user=current_user, profilepic=image_file,listA=listA,author=current_user)
     else:
         return render_template('New-email.html', user=current_user)
 
@@ -272,12 +319,21 @@ def Newemail():
 @views.route("/change profilepic", methods=['GET', 'POST'])
 @login_required
 def Profile():
+    flash('Make sure the filename is less than 20 letters', category='success')
+    posts = Post.query.filter_by(author=current_user.id).all()
+    questions = Question.query.filter_by(author=current_user.id).all()
+    listA = []
+    for post in posts:
+        listA.insert(0, len(post.likes))
+    for question in questions:
+        listA.insert(0, len(question.likes))
+    listA = sum(listA)
     if request.method == 'POST':
         user = current_user
         profilechange = request.files["profilepic"]
         if not profilechange:
             flash('New  too short!', category='error')
-            return render_template('Profilepic.html', user=current_user)
+            return render_template('Profilepic.html', user=current_user,listA=listA,author=current_user)
         else:
             db.session()
             filename = secure_filename(profilechange.filename)
@@ -293,7 +349,7 @@ def Profile():
             return redirect(url_for('views.userinfo'))
     else:
         user = current_user
-        return render_template('Profilepic.html', user=current_user, profilepic=user.profile_img_url)
+        return render_template('Profilepic.html', user=current_user, profilepic=user.profile_img_url,listA=listA,author=current_user)
 
 
 @views.route("/create-message", methods=['GET', 'POST'])
@@ -478,9 +534,9 @@ def view_Questions():
     b = request.args.get('b')
     c = request.args.get('c')
     if a or b or c:
-        questions = Question.query.filter(Question.text.contains(a), Question.school.contains(b.lower()),Question.Course.contains(c.lower()))
+        questions = Question.query.filter(Question.text.contains(a), Question.school.contains(b.lower()),Question.Course.contains(c.lower())).order_by(Question.total_likes.desc()).all()
     else:
-        questions = Question.query.all()
+        questions = Question.query.order_by(Question.total_likes.desc()).all()
     return render_template('Question.html', user=current_user, Questions=questions)
 
 
@@ -557,10 +613,15 @@ def delete_questionchat(question_comment_id):
 def delete_question(id):
     question = Question.query.filter_by(id=id).first()
     comment = Comment.query.filter_by(post_id=id).first()
+    like = Like2.query.filter_by(
+        author=current_user.id, question_id=id).first()
 
     if not question:
         flash("Post does not exist.", category='error')
     if current_user.id == 1:
+        for like in question.likes:
+            db.session.delete(like)
+            db.session.commit()
         for question_comments in question.comments:
             db.session.delete(question_comments)
             db.session.commit()
@@ -570,6 +631,9 @@ def delete_question(id):
     elif current_user.id != question.author:
         flash('You do not have permission to delete this post.', category='error')
     else:
+        for like in question.likes:
+            db.session.delete(like)
+            db.session.commit()
         for question_comments in question.comments:
             db.session.delete(question_comments)
             db.session.commit()
@@ -619,3 +683,69 @@ def view_Adminusers():
     else:
         flash("Current user not a Admin", category='error')
         return redirect(url_for('views.home'))
+
+@views.route("/like-post/<post_id>", methods=['POST'])
+@login_required
+def like(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+    posts= Post.query.filter_by(author=post.author).all()
+    questions = Question.query.filter_by(author=post.author).all()
+    like = Like.query.filter_by(
+        author=current_user.id, post_id=post_id).first()
+    if not post:
+        return jsonify({'error': 'Post does not exist.'}, 400)
+    elif like:
+        db.session.delete(like)
+        db.session.commit()
+        db.session()
+        post.total_likes = len(post.likes)
+        db.session.commit()
+    else:
+        like = Like(author=current_user.id, post_id=post_id)
+        db.session.add(like)
+        db.session.commit()
+        db.session()
+        post.total_likes = len(post.likes)
+        db.session.commit()
+
+    return jsonify({"likes": len(post.likes), "liked": current_user.id in map(lambda x: x.author, post.likes)})
+
+@views.route("/like-post2/<question_id>", methods=['POST'])
+@login_required
+def like2(question_id):
+    question = Question.query.filter_by(id=question_id).first()
+    like = Like2.query.filter_by(
+        author=current_user.id, question_id=question_id).first()
+
+    if not question:
+        return jsonify({'error': 'Post does not exist.'}, 400)
+    elif like:
+        db.session.delete(like)
+        db.session.commit()
+        db.session()
+        question.total_likes = len(question.likes)
+        db.session.commit()
+    else:
+        like = Like2(author=current_user.id, question_id=question_id)
+        db.session.add(like)
+        db.session.commit()
+        db.session()
+        question.total_likes = len(question.likes)
+        db.session.commit()
+    return jsonify({"likes": len(question.likes), "liked": current_user.id in map(lambda x: x.author, question.likes)})
+
+@views.route("/Viewinfo/<author>", methods=['GET', 'POST'])
+@login_required
+def userinfo_view(author):
+    user = User.query.filter_by(id=author).first()
+    print(user.username)
+    posts = Post.query.filter_by(author=author).all()
+    questions = Question.query.filter_by(author=author).all()
+    image_file = user.profile_img_url
+    listA = []
+    for post in posts:
+        listA.insert(0,len(post.likes))
+    for question in questions:
+        listA.insert(0,len(question.likes))
+    listA=sum(listA)
+    return render_template('Userinfo.html', user=user, profilepic=image_file,posts=posts,listA=listA,author=author)

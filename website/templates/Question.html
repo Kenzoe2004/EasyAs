@@ -22,9 +22,26 @@
                     </div>
                 </div>
 
-                <a href="/user-questions/{{question.author}}">{{question.user.username}}</a>
+                <a href="/Viewinfo/{{question.author}}">{{question.user.username}}</a>
                 <a>School: {{question.school}}</a>
                 <a>Course Code: {{question.Course}}</a>
+                <div>
+                <span id="likes-count-{{question.id}}">
+        {{ question.likes|length }}</span>
+        {% if user.id in question.likes|map(attribute="author")|list %}
+        <i
+          class="fas fa-thumbs-up"
+          id="like-button-{{question.id}}"
+          onclick="like2({{question.id}})"
+        ></i>
+        {% else %}
+        <i
+          class="far fa-thumbs-up"
+          id="like-button-{{question.id}}"
+          onclick="like2({{question.id}})"
+        ></i>
+        {% endif %}
+           </div>
                 <div class="btn-group" role="group">
                     <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               Dropdown

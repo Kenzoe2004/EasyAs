@@ -5,7 +5,7 @@ from flask_login import LoginManager
 
 db = SQLAlchemy()
 
-ENV = 'DEP'
+ENV = 'DEV'
 DB_NAME = 'database.db'
 URL = 'postgresql://uyfdoacixjhlgx:97f99901a2e54cea748bb32960523cdf589912e58b213f4660058c4b9a5644ef@ec2-54-196-105-177.compute-1.amazonaws.com:5432/d8p6moob0r03gl'
 
